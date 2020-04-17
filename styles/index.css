@@ -31,3 +31,7 @@ h1 {
 .articles .content li {
 	margin-bottom: 10px;
 }
+
+.reading {
+	background-color: #b2dbbf;
+}
