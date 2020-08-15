@@ -1,3 +1,9 @@
+const QUADRANT_SIZE = 50;
+
+function reset() {
+    location.reload();
+}
+
 function getShapePath(shapeType = 'alien', accessory) {
     let baseImgPath = './assets/images/shapes/';
 
@@ -34,6 +40,8 @@ function createTable(rows, cols, graph) {
             const colEl = document.createElement('td');
             colEl.setAttribute('id', `${i}-${j}`);
             colEl.style.cursor = 'pointer';
+            colEl.style.width = `${QUADRANT_SIZE}px`;
+            colEl.style.height = `${QUADRANT_SIZE}px`;
             colEl.style.backgroundColor = colorsHex[(i + j) % colorsHex.length];
 
             // handling click event
@@ -47,7 +55,7 @@ function createTable(rows, cols, graph) {
                 const shapeEl = document.createElement('img');
                 shapeEl.setAttribute('src', getShapePath('alien', accessories[(i + j) % accessories.length]));
                 shapeEl.classList.add('shape');
-                shapeEl.style.width = '29px';
+                shapeEl.style.width = `${QUADRANT_SIZE}px`;
                 event.target.appendChild(shapeEl);
 
                 // update graph
@@ -86,8 +94,8 @@ function createTable(rows, cols, graph) {
 
 const height = document.body.scrollHeight;
 const width = document.body.scrollWidth;
-const rows = Math.round(height / 30) - 10;
-const cols = Math.round(width / 30);
+const rows = Math.round(height / QUADRANT_SIZE) - 10;
+const cols = Math.round(width / QUADRANT_SIZE);
 
 const graph = [];
 for (let i = 0; i < rows; i++) {
