@@ -94,7 +94,7 @@ function createTable(rows, cols, graph) {
 
 const height = document.body.scrollHeight;
 const width = document.body.scrollWidth;
-const rows = Math.round(height / QUADRANT_SIZE) - 10;
+const rows = Math.max(Math.round(height / QUADRANT_SIZE) - 10, 5);
 const cols = Math.round(width / QUADRANT_SIZE);
 
 const graph = [];
