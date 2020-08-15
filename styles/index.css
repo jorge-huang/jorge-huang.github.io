@@ -1,37 +1,33 @@
 body {
 	font-family: 'Roboto Mono', monospace, Helvetica;
-	background: rgba(0, 0, 0, 0.85);
+	margin: 0;
+	background-color: #212221;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	color: #ffffff;
 }
 
-h1 {
-	text-align: center;
-	color: #fff;
+main {
 }
 
-.container {
-	padding: 5px 20px 25px 20px;
-	border-radius: 5px;
-	margin: 10px;
+table {
+	margin: 5px auto;
 }
 
-.container .title {
-	font-weight: bold;
+table, tr, td {
+	border: 1px solid black;
+	border-collapse: collapse;
 }
 
-.contact {
-	background-color: #247ba0;
-	color: #cedada;
-	text-align: center;
+td {
+	height: 29px;
+	width: 29px;
+	margin: 0;
+	padding: 0;
+	z-index: 1;
 }
 
-.articles {
-	background-color: #70c1b3;
-}
-
-.articles .content li {
-	margin-bottom: 10px;
-}
-
-.reading {
-	background-color: #b2dbbf;
+.shape {
+	/* position: absolute; */
 }

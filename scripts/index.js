@@ -1,41 +1,100 @@
-function addArticles() {
-    const articles = [
-        {
-            "title": "Creating your first Express application in Node.js",
-            "url": "https://medium.com/@jorgehuang88/creating-your-first-express-application-in-node-js-d92893329e82"
-        },
-        {
-            "title": "3 Ways to handle routing in Expressjs",
-            "url": "https://medium.com/@jorgehuang88/3-ways-to-handle-routing-in-expressjs-e8145f194243"
-        },
-        {
-            "title": "Handling errors in Expressjs",
-            "url": "https://medium.com/@jorgehuang88/handling-errors-in-expressjs-63b6b3db92f3"
-        }
-    ];
+function getShapePath(shapeType = 'alien', accessory) {
+    let baseImgPath = './assets/images/shapes/';
 
-    articles.forEach((article) => {
-        const articlesContentEl = document.querySelector(".articles .content ul");
-        if (articlesContentEl) {
-            articlesContentEl.innerHTML += `<li><a href="${article.url}">${article.title}</a></li`;
-        }
-    });
+    baseImgPath += shapeType
+
+    if (accessory) {
+        baseImgPath += '-' + accessory
+    }
+
+    return baseImgPath += '.png'
 }
 
-function addRecommendedReading() {
-    const links = [
-        '<a target="_blank" href="https://www.amazon.com/gp/product/1593279922/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593279922&linkCode=as2&tag=jorgehuang-20&linkId=0e46fa35e55effccb72d6c0511f7229c">Automate the Boring Stuff with Python, 2nd Edition: Practical Programming for Total Beginners</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=jorgehuang-20&l=am2&o=1&a=1593279922" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />',
-    ]
+function dfs(graph, i, j, rows, cols) {
+    if (i >= rows || j >= cols ||
+        i < 0 || j < 0 ||
+        graph[i][j] === 0) {
+        return;
+    }
 
-    links.forEach((link) => {
-        const linkContentEl = document.querySelector(".reading .content ul");
-        if (linkContentEl) {
-            linkContentEl.innerHTML += `<li>${link}</li>`;
-        }
-    });
+    graph[i][j] = 0;
+    dfs(graph, i + 1, j, rows, cols);
+    dfs(graph, i - 1, j, rows, cols);
+    dfs(graph, i, j + 1, rows, cols);
+    dfs(graph, i, j - 1, rows, cols);
 }
 
-(function () {
-    addArticles();
-    addRecommendedReading();
-})();
+function createTable(rows, cols, graph) {
+    const colorsHex = ['#99857A', '#C67B5C', '#E27B58', '#FF9D6F', '#663926', '#8E6A5A'];
+    const accessories = ['', 'hearts', 'mustache', 'sunglasses'];
+    const tableEl = document.getElementById('shapes-table');
+    for (let i = 0; i < rows; i++) {
+        const rowEl = document.createElement('tr');
+        for (let j = 0; j < cols; j++) {
+            const colEl = document.createElement('td');
+            colEl.setAttribute('id', `${i}-${j}`);
+            colEl.style.cursor = 'pointer';
+            colEl.style.backgroundColor = colorsHex[(i + j) % colorsHex.length];
+
+            // handling click event
+            colEl.addEventListener('click', (event) => {
+                const [row, col] = event.target.id.split('-');
+                if (!row || !col || graph[row][col] === 1) {
+                    return;
+                }
+
+                // adding image
+                const shapeEl = document.createElement('img');
+                shapeEl.setAttribute('src', getShapePath('alien', accessories[(i + j) % accessories.length]));
+                shapeEl.classList.add('shape');
+                shapeEl.style.width = '29px';
+                event.target.appendChild(shapeEl);
+
+                // update graph
+                graph[row][col] = 1;
+
+                const graphCopy = [];
+                for (let i = 0; i < rows; i++) {
+                    graphCopy[i] = []
+                    for (let j = 0; j < cols; j++) {
+                        graphCopy[i].push(graph[i][j]);
+                    }
+                }
+
+                // update island count
+                let count = 0;
+                for (let i = 0; i < rows; i++) {
+                    for (let j = 0; j < cols; j++) {
+                        if (graphCopy[i][j] === 1) {
+                            count++;
+                            dfs(graphCopy, i, j, rows, cols);
+                        }
+                    }
+                }
+
+                const islandCount = document.getElementById('island-count');
+                islandCount.innerText = count;
+            })
+            rowEl.appendChild(colEl);
+        }
+        tableEl.appendChild(rowEl);
+    }
+}
+
+// const shapes = ['alien', 'burger', 'cupcake'];
+// const accessories = ['hearts', 'mustache', 'sunglasses'];
+
+const height = document.body.scrollHeight;
+const width = document.body.scrollWidth;
+const rows = Math.round(height / 30) - 10;
+const cols = Math.round(width / 30);
+
+const graph = [];
+for (let i = 0; i < rows; i++) {
+    graph[i] = []
+    for (let j = 0; j < cols; j++) {
+        graph[i].push(0);
+    }
+}
+
+createTable(rows, cols, graph);
