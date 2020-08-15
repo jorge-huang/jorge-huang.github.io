@@ -34,6 +34,9 @@ function createTable(rows, cols, graph) {
     const colorsHex = ['#99857A', '#C67B5C', '#E27B58', '#FF9D6F', '#663926', '#8E6A5A'];
     const accessories = ['', 'hearts', 'mustache', 'sunglasses'];
     const tableEl = document.getElementById('shapes-table');
+
+    let currAccessoryIdx = 0;
+
     for (let i = 0; i < rows; i++) {
         const rowEl = document.createElement('tr');
         for (let j = 0; j < cols; j++) {
@@ -53,10 +56,11 @@ function createTable(rows, cols, graph) {
 
                 // adding image
                 const shapeEl = document.createElement('img');
-                shapeEl.setAttribute('src', getShapePath('alien', accessories[(i + j) % accessories.length]));
+                shapeEl.setAttribute('src', getShapePath('alien', accessories[currAccessoryIdx]));
                 shapeEl.classList.add('shape');
                 shapeEl.style.width = `${QUADRANT_SIZE}px`;
                 event.target.appendChild(shapeEl);
+                currAccessoryIdx = (currAccessoryIdx + 1) % accessories.length
 
                 // update graph
                 graph[row][col] = 1;
