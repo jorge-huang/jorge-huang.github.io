@@ -61,7 +61,7 @@ function createTable(rows, cols, graph) {
                     }
                 }
 
-                // update island count
+                // update colonies count
                 let count = 0;
                 for (let i = 0; i < rows; i++) {
                     for (let j = 0; j < cols; j++) {
@@ -72,7 +72,7 @@ function createTable(rows, cols, graph) {
                     }
                 }
 
-                const islandCount = document.getElementById('island-count');
+                const islandCount = document.getElementById('count');
                 islandCount.innerText = count;
             })
             rowEl.appendChild(colEl);
