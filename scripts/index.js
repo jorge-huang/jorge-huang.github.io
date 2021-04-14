@@ -1,18 +1,33 @@
+var QUADRANT_SIZE = 35;
+
 var ENTRANCE_ID = -8;
 var EXIT_ID = -88;
-var QUADRANT_SIZE = 35;
+
 var rows = 25;
 var cols = 25;
 var graph = [];
 var start = [24, 0];
 var end = [0, 24];
+
+var godModeItem = {
+    id: -888,
+    pos: [6, 3],
+    enabled: false
+}
 createTable(rows, cols, graph,
     createWalls,
-    createEntranceAndExit);
+    createEntranceAndExit,
+    createGodMode);
 
 var player = document.getElementById('player');
 var [x, y] = start;
 document.addEventListener('keydown', keyDownEventHandler);
+
+function createGodMode(grap) {
+    const [i, j] = godModeItem.pos;
+    grap[i][j] = godModeItem.id;
+    document.getElementById(`${i}-${j}`).classList.add('god-mode-item');
+}
 
 function createWalls(graph) {
     const colorsHex = ['#99857A', '#C67B5C', '#E27B58', '#FF9D6F', '#663926', '#8E6A5A'];
@@ -103,8 +118,11 @@ function keyDownEventHandler(event) {
     }
 
     if (nextX < 0 || nextX >= graph.length ||
-        nextY < 0 || nextY >= graph[0].length ||
-        graph[nextX][nextY] === 1) {
+        nextY < 0 || nextY >= graph[0].length) {
+        return;
+    }
+
+    if (!godModeItem.enabled && graph[nextX][nextY] === 1) {
         return;
     }
 
@@ -113,6 +131,16 @@ function keyDownEventHandler(event) {
     player.style.top = `${parseInt(getComputedStyle(player).top.split('p')[0]) + nextTop}px`;
     player.style.left = `${parseInt(getComputedStyle(player).left.split('p')[0]) + nextLeft}px`;
 
-    console.log(graph[x][y]);
     document.getElementById('msg').innerText = graph[x][y] === EXIT_ID ? 'nice!' : 'find the exit!';
+    if (graph[x][y] === godModeItem.id) {
+        document.getElementById('player').classList.add('god-mode');
+        document.getElementById(`${x}-${y}`).classList.remove('god-mode-item');
+        godModeItem.enabled = true;
+
+        // setTimeout(() => {
+        //     document.getElementById('player').classList.remove('god-mode');
+        //     document.getElementById('god-mode-msg').classList.remove('god-mode');
+        //     godModeItem.enabled = false;
+        // }, 5 * 1000);
+    }
 }

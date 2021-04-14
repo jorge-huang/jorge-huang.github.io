@@ -44,3 +44,25 @@ td {
 footer {
 	text-align: center;
 }
+
+.god-mode {
+	animation: god-mode-effects 0.5s infinite;
+}
+
+.god-mode-item {
+	background-image: url("../assets/images/shapes/star-reversed.gif");
+	height: 36px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+@keyframes god-mode-effects {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
