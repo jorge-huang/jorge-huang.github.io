@@ -8,15 +8,21 @@ body {
 	color: #ffffff;
 }
 
+header {
+	text-align: center;
+}
+
 main {
+	margin: 0 auto;
+	min-width: 901px;
+	width: 901px;
 }
 
 table {
-	margin: 5px auto;
+	/* margin: 5px auto; */
 }
 
 table, tr, td {
-	/* border: 1px solid black; */
 	border-collapse: collapse;
 }
 
@@ -26,6 +32,15 @@ td {
 	z-index: 1;
 }
 
-.shape {
-	/* position: absolute; */
+#player {
+	display: block;
+	height: 25px;
+	position: relative;
+	left: 3px;
+	top: 0px;
+	transform: translateY(-122%);
+}
+
+footer {
+	text-align: center;
 }
