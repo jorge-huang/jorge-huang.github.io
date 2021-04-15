@@ -12,10 +12,16 @@ header {
 	text-align: center;
 }
 
+#msg {
+	font-size: 2rem;
+	background-color: gray;
+	margin: 20px 0;
+}
+
 main {
 	margin: 0 auto;
-	min-width: 901px;
-	width: 901px;
+	min-width: 630px;
+	width: 630px;
 }
 
 table {
@@ -36,17 +42,27 @@ td {
 	display: block;
 	height: 25px;
 	position: relative;
-	left: 3px;
+	left: 0px;
 	top: 0px;
-	transform: translateY(-122%);
+	transform: translateY(-110%);
+}
+
+.instructions {
+	padding-left: 30px;
 }
 
 footer {
+	padding: 30px 0;
 	text-align: center;
 }
 
+footer a {
+	color: white;
+}
+
 .god-mode {
-	animation: god-mode-effects 0.5s infinite;
+	/* animation: god-mode-effects 0.5s infinite; */
+	animation: glow 0.5s ease-in-out infinite alternate;
 }
 
 .god-mode-item {
@@ -64,5 +80,15 @@ footer {
 
 	to {
 		opacity: 1;
+	}
+}
+
+@keyframes glow {
+	from {
+		box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+	}
+
+	to {
+		box-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
 	}
 }
