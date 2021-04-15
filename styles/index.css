@@ -60,27 +60,27 @@ footer a {
 	color: white;
 }
 
-.god-mode {
-	/* animation: god-mode-effects 0.5s infinite; */
-	animation: glow 0.5s ease-in-out infinite alternate;
+#gold-count {
+	font-size: 1.5rem;
+	margin-bottom: 5px;
+}
+
+.gold-coin {
+	background-image: url("../assets/images/shapes/gold-coin.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 8px;
 }
 
 .god-mode-item {
 	background-image: url("../assets/images/shapes/star-reversed.gif");
-	height: 36px;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
 
-@keyframes god-mode-effects {
-	from {
-		opacity: 0;
-	}
-
-	to {
-		opacity: 1;
-	}
+.god-mode {
+	animation: glow 0.5s ease-in-out infinite alternate;
 }
 
 @keyframes glow {

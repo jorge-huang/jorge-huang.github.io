@@ -14,18 +14,39 @@ var godModeItem = {
     pos: [14, 17],
     enabled: false
 }
+
+var gold = {
+    id: 0,
+    total: 0
+};
+
+var wall = {
+    id: 1
+}
+
 createTable(rows, cols, graph,
     createWalls,
     createEntranceAndExit,
-    createGodMode);
+    createGodMode,
+    createGold);
 
 var player = document.getElementById('player');
 var [x, y] = start;
 document.addEventListener('keydown', keyDownEventHandler);
 
-function createGodMode(grap) {
+function createGold(graph) {
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (graph[i][j] === gold.id) {
+                document.getElementById(`${i}-${j}`).classList.add('gold-coin');
+            }
+        }
+    }
+}
+
+function createGodMode(graph) {
     const [i, j] = godModeItem.pos;
-    grap[i][j] = godModeItem.id;
+    graph[i][j] = godModeItem.id;
     document.getElementById(`${i}-${j}`).classList.add('god-mode-item');
 }
 
@@ -71,7 +92,7 @@ function createTable(rows, cols, graph, ...cb) {
     for (let i = 0; i < rows; i++) {
         graph[i] = []
         for (let j = 0; j < cols; j++) {
-            graph[i].push(0);
+            graph[i].push(gold.id);
         }
     }
 
@@ -128,7 +149,7 @@ function keyDownEventHandler(event) {
         return;
     }
 
-    if (!godModeItem.enabled && graph[nextX][nextY] === 1) {
+    if (!godModeItem.enabled && graph[nextX][nextY] === wall.id) {
         return;
     }
 
@@ -146,9 +167,14 @@ function keyDownEventHandler(event) {
         setTimeout(() => {
             document.getElementById('player').classList.remove('god-mode');
             godModeItem.enabled = false;
-            if (graph[x][y] === 1) {
+            if (graph[x][y] === wall.id) {
                 document.getElementById('msg').innerHTML = 'GAME OVER';
             }
         }, 5 * 1000);
+    } else if (graph[x][y] === gold.id) {
+        gold.total++;
+        document.getElementById(`${x}-${y}`).classList.remove('gold-coin');
+        document.getElementById('gold-total').innerText = gold.total;
+        graph[x][y] = -1;
     }
 }
