@@ -26,10 +26,14 @@
             GOLD: <span id="gold-total">0</span>
         </div>
     </header>
-    <main id="shapes-area">
-        <section>
+    <main>
+        <section id="maze">
             <table id="shapes-table"></table>
             <img id="player" src="assets/images/shapes/alien-mustache.png">
+        </section>
+        <section id="end-game">
+            <p id="end-game-msg"></p>
+            <button onclick="reset()">Play Again</button>
         </section>
         <section class="instructions">
             <h4>Instructions</h4>

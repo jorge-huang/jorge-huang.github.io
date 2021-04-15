@@ -24,10 +24,6 @@ main {
 	width: 630px;
 }
 
-table {
-	/* margin: 5px auto; */
-}
-
 table, tr, td {
 	border-collapse: collapse;
 }
@@ -45,6 +41,21 @@ td {
 	left: 0px;
 	top: 0px;
 	transform: translateY(-110%);
+}
+
+#end-game {
+	text-align: center;
+	font-size: 2rem;
+	background-color: whitesmoke;
+	color: #212221;
+	min-width: 630px;
+	width: 630px;
+	height: 500px;
+	display: none;
+}
+
+#end-game-msg {
+	padding-top: 200px;
 }
 
 .instructions {

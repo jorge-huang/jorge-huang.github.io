@@ -24,6 +24,11 @@ var wall = {
     id: 1
 }
 
+var stats = {
+    startTime: null,
+    endTime: null
+}
+
 createTable(rows, cols, graph,
     createWalls,
     createEntranceAndExit,
@@ -119,6 +124,12 @@ function createTable(rows, cols, graph, ...cb) {
 }
 
 function keyDownEventHandler(event) {
+    if (!document.getElementById('maze')) return;
+
+    if (!stats.startTime) {
+        stats.startTime = Date.now();
+    }
+
     let nextX = x, nextY = y, nextTop = 0, nextLeft = 0;
     const offsetAmt = QUADRANT_SIZE + 1;
     switch (event.key) {
@@ -158,7 +169,6 @@ function keyDownEventHandler(event) {
     player.style.top = `${parseInt(getComputedStyle(player).top.split('p')[0]) + nextTop}px`;
     player.style.left = `${parseInt(getComputedStyle(player).left.split('p')[0]) + nextLeft}px`;
 
-    document.getElementById('msg').innerText = graph[x][y] === EXIT_ID ? 'nice!' : 'find the exit!';
     if (graph[x][y] === godModeItem.id) {
         document.getElementById('player').classList.add('god-mode');
         document.getElementById(`${x}-${y}`).classList.remove('god-mode-item');
@@ -169,6 +179,9 @@ function keyDownEventHandler(event) {
             godModeItem.enabled = false;
             if (graph[x][y] === wall.id) {
                 document.getElementById('msg').innerHTML = 'GAME OVER';
+                document.getElementById('end-game-msg').innerText = 'GAME OVER';
+                document.getElementById('maze').remove();
+                document.getElementById('end-game').style.display = 'block';
             }
         }, 5 * 1000);
     } else if (graph[x][y] === gold.id) {
@@ -176,5 +189,14 @@ function keyDownEventHandler(event) {
         document.getElementById(`${x}-${y}`).classList.remove('gold-coin');
         document.getElementById('gold-total').innerText = gold.total;
         graph[x][y] = -1;
+    } else if (graph[x][y] === EXIT_ID) {
+        stats.endTime = Date.now();
+        document.getElementById('maze').remove();
+        document.getElementById('end-game-msg').innerText = `${(stats.endTime - stats.startTime) / 1000} seconds`;
+        document.getElementById('end-game').style.display = 'block';
     }
+}
+
+function reset() {
+    location.reload();
 }
